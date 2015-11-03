@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: HelloMysql_production
-  username: HelloMysql
-  password: <%= ENV['HELLOMYSQL_DATABASE_PASSWORD'] %>
+  database: RailsDemo_production
+  username: RailsDemo
+  password: <%= ENV['RAILSDEMO_DATABASE_PASSWORD'] %>
