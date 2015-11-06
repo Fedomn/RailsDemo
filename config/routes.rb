@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
+  root 'users#index'
+
   resources :users
+
+  resources :todos do
+    collection do
+      match 'show_all_todos/:id' => 'todos#show_all_todos', :via => [:get, :post], :as => :show_all_todos
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
