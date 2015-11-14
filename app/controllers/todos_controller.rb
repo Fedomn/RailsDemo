@@ -1,18 +1,8 @@
 class TodosController < ApplicationController
 
-  def show_all_todos
-    # @todos = Todo.find_by_user_id(params[:id])
-    @todos = Todo.where(user_id: params[:id])
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
   # GET todos
   def index
-    @id = params[:id]
-    @todos = Todo.all
+    @todos = Todo.where(user_id: params[:user_id])
 
     respond_to do |format|
       format.html
@@ -32,6 +22,7 @@ class TodosController < ApplicationController
 
   # GET /todos/new
   def new
+    @user = User.find(params[:user_id])
     @todo = Todo.new
 
     respond_to do |format|
@@ -42,16 +33,19 @@ class TodosController < ApplicationController
 
   # GET /todos/1/edit
   def edit
+    @user = User.find(params[:user_id])
     @todo = Todo.find(params[:id])
   end
 
   # POST /todos
   def create
+    @user = User.find(params[:user_id])
     @todo = Todo.new(todo_params)
+    @user.todos << @todo
 
     respond_to do |format|
-      if @todo.save
-        format.html { redirect_to @todo, :notice => 'create todo success' }
+      if @user.save
+        format.html { redirect_to user_todos_path, :notice => 'create todo success' }
         format.json { render :json => @todo, :status => :created, :location => @todo }
       else
         format.html { render :action => 'new' }
@@ -66,7 +60,7 @@ class TodosController < ApplicationController
 
     respond_to do |format|
       if @todo.update_attributes(todo_params)
-        format.html { redirect_to @todo, :notice => 'update todo success' }
+        format.html { redirect_to user_todos_path, :notice => 'update todo success' }
         format.json { head :no_content }
       else
         format.html { render :action => 'edit' }
@@ -81,7 +75,7 @@ class TodosController < ApplicationController
     @todo.destroy
 
     respond_to do |format|
-      format.html { redirect_to todos_path }
+      format.html { redirect_to user_todos_path }
       format.json { head :no_content }
     end
   end
