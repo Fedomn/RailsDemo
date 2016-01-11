@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  root 'users#index'
+  root 'welcome#login'
+  match 'login' => 'welcome#login', :via => [:get, :post], as: :login
 
   resources :users do
     resources :todos
