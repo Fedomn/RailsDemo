@@ -1,3 +1,4 @@
+# coding: utf-8
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -18,6 +19,8 @@ Rails.application.configure do
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
+  config.log_level = :info
+  config.log_formatter = ::Logger::Formatter.new
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
