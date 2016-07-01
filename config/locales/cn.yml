@@ -1,0 +1,8 @@
+cn:
+  general:
+    authenticated: '登录成功'
+    not_authenticated: '未登录'
+    not_authorized: '未授权'
+    not_configured: '未配置'
+    not_found: '请求的资源不存在'
+    error_occurred: '程序发生错误或异常'
