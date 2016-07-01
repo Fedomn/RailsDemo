@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   validates :username, presence: true
-  validates :password, length: { in: 6..20}
+  validates :password, length: { in: 6..40}
 
   has_many :todos, :dependent => :destroy
 
