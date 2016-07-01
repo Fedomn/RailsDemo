@@ -1,64 +1,70 @@
-<% content_for :title, '用户登录' %>
-<script>
-    function popoverInput(obj, msg, pos){
-        $(obj).focus();
-        $(obj).popover({
-            content: msg,
-            placement: pos
-        });
-        $(obj).popover('show');
-        window.setTimeout(function(){
-            $(obj).popover('destroy');
-        }, 3000);
-    }
-
-    $(function () {
-        $('#form_login').submit(function(){
-            var username = $('#username');
-            var password = $('#password');
-            if($.trim(username.val()) == ''){
-                popoverInput(username, '请输入用户名！', 'top');
-                return false;
-            }
-            else if($.trim(password.val()) == ''){
-                popoverInput(password, '请输入密码！', 'top');
-                return false;
-            }
-            return true;
-        });
-    });
-</script>
-<div>
-  <%= flash[:error] %>
-</div>
-<div class="container" style="margin-top: 100px;width: 90%;">
-  <div class="row">
-      <div class="col-md-8">
-            <div class="col-md-9">
-                <%= form_tag(login_path, :class => "form-horizontal", :id => "form_login", :method => "post") do %>
-                    <div class="form-group">
-                      <label for="username" class="col-md-3 hidden-sm control-label">用户名</label>
-                      <div class="col-sm-12 col-md-9">
-                        <input type="text" class="form-control" name="username" id="username" value="<%= @username %>" placeholder="请输入用户名" tabindex="1" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="password" class="col-md-3 hidden-sm control-label">密码</label>
-                      <div class="col-sm-12 col-md-9">
-                        <input type="password" class="form-control" name="password" id="password" value="<%= @password %>" placeholder="请输入密码" tabindex="2" />
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="col-md-3 hidden-sm">&nbsp;</label>
-                      <div class="col-sm-12 col-md-9">
-                        <button type="submit" class="btn btn-success btn_submit">&nbsp;&nbsp;&nbsp;立即登录&nbsp;&nbsp;&nbsp;</button>
-                      </div>
-                    </div>
-                <% end %>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="pin-button">
+    <a href="#" class="ui blue inverted button right-floated">注册</a>
   </div>
-</div>
-
-
+  <img src='<%= image_path('night.jpg') %>' class="login-background">
+  <div class="login-content">
+    <div class="login-form">
+      <%= form_tag(login_path, :class => 'form-horizontal', :id => 'login_form', :method => 'post') do %>
+        <div class="ui form basic segment">
+          <% if flash[:error] %>
+            <div class="ui error visible message">
+              <%= flash[:error] %>
+            </div>
+          <% end %>
+          <div class="field">
+            <input type="text" name="username" id="username" placeholder="用户名"/>
+          </div>
+          <div class="field">
+            <input type="text" name="password" id="password" placeholder="密码"/>
+          </div>
+          <div class="field">
+            <div class="ui toggle checkbox green">
+              <input type="checkbox" name="remember"/>
+              <label for="remember">记住我</label>
+            </div>
+            <a href="#" class="forget-password right-floated">忘记密码?</a>
+          </div>
+          <button class="ui green fluid button">登录</button>
+        </div>
+      <% end  %>
+    </div>
+  </div>
+  <script type="text/javascript" charset="utf-8">
+    $('#login_form').form({
+      on: 'blur',
+      inline: true,
+      fields: {
+        username: {
+          identifier: 'username',
+          rules: [
+            {
+              type: 'empty',
+              prompt: '用户名不能为空'
+            }
+          ]
+        },
+        password: {
+          identifier: 'password',
+          rules: [
+            {
+              type: 'empty',
+              prompt: '密码不能为空'
+            }
+          ]
+        }
+      }
+    });
+    new RainyDay({image: $('.login-background')[0]}).rain([[3, 2, 2]], 100);
+  </script>
+</body>
+</html>

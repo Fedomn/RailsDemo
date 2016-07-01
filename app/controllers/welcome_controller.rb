@@ -3,9 +3,7 @@ class WelcomeController < ApplicationController
   skip_before_action :authenticate, only: [:login, :logout]
 
   def login
-    if request.get?
-      render :layout => 'login'
-    else
+    unless request.get?
       @username = params[:username]
       @password = params[:password]
 
