@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
       if request.xhr?
         render js: %(window.location.pathname="#{root_path}")
       else
-        redirect_to(url_for(controller: 'welcome', action: 'login'), notice: t('general.not_authenticated'))
+        redirect_to(url_for(controller: 'welcome', action: 'login'), flash: {:error => t('general.not_authenticated')})
       end
     end
   end

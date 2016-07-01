@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root 'welcome#login'
   match 'login' => 'welcome#login', :via => [:get, :post], as: :login
+  get 'logout' => 'welcome#logout'
 
   resources :users do
     resources :todos
