@@ -25,7 +25,7 @@
             <input type="text" name="username" id="username" placeholder="用户名"/>
           </div>
           <div class="field">
-            <input type="text" name="password" id="password" placeholder="密码"/>
+            <input type="password" name="password" id="password" placeholder="密码"/>
           </div>
           <div class="field">
             <div class="ui toggle checkbox green">
@@ -64,7 +64,13 @@
         }
       }
     });
-    new RainyDay({image: $('.login-background')[0]}).rain([[3, 2, 2]], 100);
+    var backgroundImg = $('.login-background')[0];
+    if ('undefined' != typeof backgroundImg && null !== backgroundImg) {
+      backgroundImg.onload = function () {
+        new RainyDay({image: backgroundImg}).rain([[3, 2, 2]], 100);
+      };
+      backgroundImg.crossOrigin = 'anonymous';
+    }
   </script>
 </body>
 </html>
